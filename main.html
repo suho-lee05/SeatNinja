@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좌석 예약 - Seat Ninja</title>
+</head>
+<body>
+    <h2>🎯 좌석 예약</h2>
+
+    <button onclick="startSeatNinja(1)">특정 좌석 예약</button>
+    <button onclick="startSeatNinja(2)">빈자리 자동 예약</button>
+    <button onclick="stopLoop()">예약 중지</button>
+    
+    <hr>
+    
+    <h2>❌ 배석 취소</h2>
+    <button onclick="cancelReservation()">배석 취소</button>
+    <p id="cancelStatus"></p>
+
+    <hr>
+    <h2>👤내정보</h2>
+    <button onclick="goToMyInfo()">내 정보 보기</button>
+    
+    <hr>
+    <button onclick="logout()">🚪 로그아웃</button>
+
+    <p id="status"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>

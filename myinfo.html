@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 - Seat Ninja</title>
+</head>
+<body>
+    <h2>📌 내 좌석 정보</h2>
+
+    <p><strong>현재 좌석:</strong> <span id="userSeat">조회 중...</span></p>
+    <p><strong>잔여 시간:</strong> <span id="remainingTime">조회 중...</span></p>
+    <p><strong>연장 가능 시간:</strong> <span id="renewTime">조회 중...</span></p>
+
+    <button onclick="renewSeat()">🔄 연장하기</button>
+    <p id="renewStatus"></p>
+
+    <hr>
+
+    <button onclick="goBack()">⬅ 뒤로 가기</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
