@@ -66,7 +66,7 @@ function goBack() {
     window.location.href = "main.html";
 }
 
-// ✅ 내 정보 조회 (myinfo.html에서 실행)
+// ✅ 내 정보 조회 (배석 취소용 ID 저장)
 async function getUserInfo() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -78,7 +78,6 @@ async function getUserInfo() {
     }
 
     try {
-        // ✅ "seat-charges" API 요청
         let response = await fetch("https://library.konkuk.ac.kr/pyxis-api/1/api/seat-charges", {
             method: "GET",
             headers: {
@@ -91,23 +90,22 @@ async function getUserInfo() {
 
         if (data.success && data.data.totalCount > 0) {
             let reservation = data.data.list[0]; // 첫 번째 예약 정보 가져오기
+            myReservationId = reservation.id;  // ✅ 배석 해제용 ID 저장
+            console.log("예약 ID:", myReservationId);  // 🔍 디버깅용 콘솔 출력
 
-            // ✅ 열람실 정보 가져오기
             document.getElementById("userSeat").innerText = `좌석 ${reservation.seat.code} (${reservation.room.name})`;
 
-            // ✅ 잔여 시간 계산
             let now = new Date();
             let endTime = new Date(reservation.endTime);
-            let remainingMinutes = Math.floor((endTime - now) / (1000 * 60)); // 남은 시간 (분 단위)
+            let remainingMinutes = Math.floor((endTime - now) / (1000 * 60));
 
             document.getElementById("remainingTime").innerText = remainingMinutes > 0
                 ? `${Math.floor(remainingMinutes / 60)}시간 ${remainingMinutes % 60}분 남음`
                 : "시간 종료됨";
 
-            // ✅ 연장 가능 시간 가져오기 (날짜 제외하고 시간만 표시)
             if (reservation.renewableDate) {
                 let renewTime = new Date(reservation.renewableDate);
-                let renewHours = renewTime.getHours().toString().padStart(2, '0'); // 두 자리 유지
+                let renewHours = renewTime.getHours().toString().padStart(2, '0');
                 let renewMinutes = renewTime.getMinutes().toString().padStart(2, '0');
                 document.getElementById("renewTime").innerText = `${renewHours}:${renewMinutes}부터 연장 가능`;
             } else {
@@ -118,6 +116,7 @@ async function getUserInfo() {
             document.getElementById("userSeat").innerText = "예약 없음";
             document.getElementById("remainingTime").innerText = "-";
             document.getElementById("renewTime").innerText = "-";
+            myReservationId = null;  // ✅ 예약이 없으면 null 값 설정
         }
 
     } catch (error) {
@@ -264,7 +263,7 @@ async function confirmSeat(reservationId) {
 }
 
 
-// ✅ 배석 취소 기능 (필수 파라미터 반영)
+// ✅ 배석 취소 (반납) 기능
 async function cancelReservation() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -274,35 +273,36 @@ async function cancelReservation() {
     }
 
     if (!myReservationId) {
-        document.getElementById("cancelStatus").innerText = "❌ 취소할 좌석 예약이 없습니다.";
+        document.getElementById("cancelStatus").innerText = "❌ 해제할 좌석이 없습니다.";
         return;
     }
 
     try {
         let response = await fetch("https://library.konkuk.ac.kr/pyxis-api/1/api/seat-discharges", {
             method: "POST",
-            headers: { 
+            headers: {
                 "Content-Type": "application/json;charset=UTF-8",
                 "pyxis-auth-token": USER_TOKEN
             },
             body: JSON.stringify({
-                "seatCharge": myReservationId,  // ✅ 필수 파라미터 반영
-                "smufMethodCode": "PC"  // ✅ 요청에서 확인된 값
+                "seatCharge": myReservationId,  // ✅ 예약된 좌석 ID
+                "smufMethodCode": "MOBILE"  // ✅ 모바일에서 해제 요청
             })
         });
 
         let data = await response.json();
 
         if (data.success) {
-            document.getElementById("cancelStatus").innerText = "✅ 배석이 취소되었습니다.";
-            myReservationId = null;
+            document.getElementById("cancelStatus").innerText = "✅ 배석이 해제되었습니다!";
+            getUserInfo(); // ✅ 해제 후 정보 다시 불러오기
         } else {
-            document.getElementById("cancelStatus").innerText = `❌ 배석 취소 실패: ${data.message}`;
+            document.getElementById("cancelStatus").innerText = `❌ 배석 해제 실패: ${data.message}`;
         }
     } catch (error) {
-        document.getElementById("cancelStatus").innerText = "❌ 배석 취소 오류 발생!";
+        document.getElementById("cancelStatus").innerText = "❌ 배석 해제 오류 발생!";
     }
 }
+
 
 // ✅ 좌석 연장 기능 (새로운 API 적용)
 async function renewSeat() {
