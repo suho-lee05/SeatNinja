@@ -4,19 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 - Seat Ninja</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        /* 로그인 박스 */
+        .login-container {
+            background: white;
+            width: 320px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        /* 입력 필드 스타일 */
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* 버튼 스타일 */
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 추가 옵션 스타일 */
+        .options {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .options a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h2>🔑 Seat Ninja 로그인</h2>
-    
-    <label for="userId">아이디:</label>
-    <input type="text" id="userId" placeholder="아이디 입력"><br>
+    <div class="login-container">
+        <h2>🔑 Seat Ninja 로그인</h2>
+        
+        <label for="userId">아이디:</label>
+        <input type="text" id="userId" class="input-field" placeholder="아이디 입력"><br>
 
-    <label for="userPw">비밀번호:</label>
-    <input type="password" id="userPw" placeholder="비밀번호 입력"><br>
+        <label for="userPw">비밀번호:</label>
+        <input type="password" id="userPw" class="input-field" placeholder="비밀번호 입력"><br>
 
-    <button onclick="login()">로그인</button>
+        <button type="button" class="login-btn" onclick="login()">로그인</button>
 
-    <p id="status"></p>
+        <div class="options">
+            <p><a href="#">비밀번호를 잊으셨나요?</a></p>
+            <p>계정이 없나요? <a href="#">회원가입</a></p>
+        </div>
+
+        <p id="status"></p>
+    </div>
 
     <script src="script.js"></script>
 </body>
