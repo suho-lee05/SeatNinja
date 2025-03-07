@@ -4,27 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 정보 - Seat Ninja</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        /* 카드형 스타일 */
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        /* 상태 메시지 스타일 */
+        #renewStatus, #cancelStatus {
+            margin-top: 10px;
+            font-weight: bold;
+            color: red;
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
-    <h2>📌 내 좌석 정보</h2>
+    <div class="container">
+        <div class="card">
+            <h2>📌 내 좌석 정보</h2>
+            <p><strong>현재 좌석:</strong> <span id="userSeat">조회 중...</span></p>
+            <p><strong>잔여 시간:</strong> <span id="remainingTime">조회 중...</span></p>
+            <p><strong>연장 가능 시간:</strong> <span id="renewTime">조회 중...</span></p>
+        </div>
 
-    <p><strong>현재 좌석:</strong> <span id="userSeat">조회 중...</span></p>
-    <p><strong>잔여 시간:</strong> <span id="remainingTime">조회 중...</span></p>
-    <p><strong>연장 가능 시간:</strong> <span id="renewTime">조회 중...</span></p>
+        <div class="card">
+            <h2>🔄 좌석 연장</h2>
+            <button class="btn btn-primary" onclick="renewSeat()">연장하기</button>
+            <p id="renewStatus"></p>
+        </div>
 
-    <button onclick="renewSeat()">🔄 연장하기</button>
-    <p id="renewStatus"></p>
+        <div class="card">
+            <h2>❌ 배석 해제</h2>
+            <button class="btn btn-danger" onclick="cancelReservation()">배석 해제</button>
+            <p id="cancelStatus"></p>
+        </div>
 
-    <h2>❌ 배석 해제</h2>
-    <button onclick="cancelReservation()">배석 해제</button>
-    <p id="cancelStatus"></p>
-    
-
-
-
-    <hr>
-
-    <button onclick="goBack()">⬅ 뒤로 가기</button>
+        <div class="card">
+            <button class="btn btn-secondary" onclick="goBack()">⬅ 뒤로 가기</button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
