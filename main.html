@@ -4,28 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>좌석 예약 - Seat Ninja</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        /* 카드형 스타일 */
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #117a8b;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* 상태 메시지 스타일 */
+        #status, #cancelStatus {
+            margin-top: 10px;
+            font-weight: bold;
+            color: red;
+        }
+
+    </style>
 </head>
 <body>
-    <h2>🎯 좌석 예약</h2>
+    <div class="container">
+        <div class="card">
+            <h2>🎯 좌석 예약</h2>
+            <button class="btn btn-primary" onclick="startSeatNinja(1)">특정 좌석 예약</button>
+            <button class="btn btn-primary" onclick="startSeatNinja(2)">빈자리 자동 예약</button>
+            <button class="btn btn-secondary" onclick="stopLoop()">예약 중지</button>
+        </div>
 
-    <button onclick="startSeatNinja(1)">특정 좌석 예약</button>
-    <button onclick="startSeatNinja(2)">빈자리 자동 예약</button>
-    <button onclick="stopLoop()">예약 중지</button>
-    
-    <hr>
-    
-    <h2>❌ 배석 취소</h2>
-    <button onclick="cancelReservation()">배석 취소</button>
-    <p id="cancelStatus"></p>
+        <div class="card">
+            <h2>❌ 배석 취소</h2>
+            <button class="btn btn-danger" onclick="cancelReservation()">배석 취소</button>
+            <p id="cancelStatus"></p>
+        </div>
 
-    <hr>
-    <h2>👤내정보</h2>
-    <button onclick="goToMyInfo()">내 정보 보기</button>
-    
-    <hr>
-    <button onclick="logout()">🚪 로그아웃</button>
+        <div class="card">
+            <h2>👤 내 정보</h2>
+            <button class="btn btn-info" onclick="goToMyInfo()">내 정보 보기</button>
+        </div>
 
-    <p id="status"></p>
+        <div class="card">
+            <button class="btn btn-danger" onclick="logout()">🚪 로그아웃</button>
+            <p id="status"></p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
