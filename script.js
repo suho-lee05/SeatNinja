@@ -346,6 +346,59 @@ async function renewSeat() {
 
 
 
+// ✅ 열람실 칸막이석 & 1인석 상태 조회
+async function fetchSeatStatus() {
+    USER_TOKEN = localStorage.getItem("USER_TOKEN");
+
+    if (!USER_TOKEN) {
+        document.getElementById("cubicleSeatsStatus").innerText = "❌ 로그인 정보 없음.";
+        document.getElementById("singleSeatsStatus").innerText = "❌ 로그인 정보 없음.";
+        return;
+    }
+
+    try {
+        let response = await fetch(`https://library.konkuk.ac.kr/pyxis-api/1/api/rooms/${ROOM_ID}/seats`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "pyxis-auth-token": USER_TOKEN
+            }
+        });
+
+        let data = await response.json();
+        let seats = data.data.list;
+
+        // ✅ 칸막이석 필터링 (24~129번 좌석)
+        let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 129);
+        let availableCubicleSeats = cubicleSeats.filter(s => !s.isOccupied).map(s => s.code);
+
+        // ✅ 1인석 필터링 (지정된 번호 범위)
+        let singleSeatNumbers = [1, 2, 3, 4, 21, 22, 23, 391, 392, 393, 394, 395, 396, 397, 398, 405, 406, 407, 408];
+        let singleSeats = seats.filter(s => singleSeatNumbers.includes(s.code));
+        let availableSingleSeats = singleSeats.filter(s => !s.isOccupied).map(s => s.code);
+
+        // ✅ HTML 업데이트
+        document.getElementById("cubicleSeatsStatus").innerHTML = 
+            availableCubicleSeats.length > 0 
+                ? `✅ ${availableCubicleSeats.join(", ")} 번 사용 가능` 
+                : "❌ 모두 사용 중";
+
+        document.getElementById("singleSeatsStatus").innerHTML = 
+            availableSingleSeats.length > 0 
+                ? `✅ ${availableSingleSeats.join(", ")} 번 사용 가능` 
+                : "❌ 모두 사용 중";
+
+    } catch (error) {
+        document.getElementById("cubicleSeatsStatus").innerText = "❌ 데이터 불러오기 실패!";
+        document.getElementById("singleSeatsStatus").innerText = "❌ 데이터 불러오기 실패!";
+    }
+}
+
+// ✅ 페이지 로드시 자동으로 좌석 정보 조회
+document.addEventListener("DOMContentLoaded", function () {
+    fetchSeatStatus();
+});
+
 
 
 
