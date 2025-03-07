@@ -345,7 +345,6 @@ async function renewSeat() {
 }
 
 
-
 // ✅ 열람실 칸막이석 & 1인석 상태 조회
 async function fetchSeatStatus() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
@@ -398,6 +397,8 @@ async function fetchSeatStatus() {
 document.addEventListener("DOMContentLoaded", function () {
     fetchSeatStatus();
 });
+
+
 
 
 
