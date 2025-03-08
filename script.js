@@ -178,7 +178,7 @@ async function reserveSpecificSeat(seatId) {
 
         if (reserveData.success) {
             myReservationId = reserveData.data.id;  // ✅ 예약 ID 저장
-            document.getElementById("status").innerText = `✅ 좌석 ${seatId} 예약 성공! 배석 확정 중...`;
+            //document.getElementById("status").innerText = `✅ 좌석 ${seatId} 예약 성공! 배석 확정 중...`;
 
             await confirmSeat(myReservationId); // ✅ 배석 확정 실행
         } else {
