@@ -368,7 +368,7 @@ async function fetchSeatStatus() {
         let seats = data.data.list;
 
         // ✅ 칸막이석 필터링 (24~129번 좌석)
-        let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 129);
+        let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 114);
         let availableCubicleSeats = cubicleSeats.filter(s => !s.isOccupied).map(s => s.code);
 
         // ✅ 1인석 필터링 (지정된 번호 범위)
