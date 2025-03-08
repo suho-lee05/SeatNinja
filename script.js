@@ -399,6 +399,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// ✅ 즐겨찾기 페이지로 이동
+function goToFavorites() {
+    window.location.href = "favorites.html";
+}
 
 
 
