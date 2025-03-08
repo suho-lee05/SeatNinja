@@ -142,7 +142,7 @@ async function startSeatNinja(mode) {
     if (!USER_TOKEN) {
         document.getElementById("status").innerText = "❌ 로그인 정보 없음. 로그인 페이지로 이동합니다.";
         setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         }, 2000);
         return;
     }
