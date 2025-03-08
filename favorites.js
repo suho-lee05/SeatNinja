@@ -57,7 +57,12 @@ async function reserveFavoriteSeat(seatId) {
         let reserveData = await response.json();
 
         if (reserveData.success) {
-            document.getElementById("favoritesContainer").innerHTML = `✅ 좌석 ${seatId} 예약 성공!`;
+            let reservationId = reserveData.data.id;  // ✅ 예약 ID 저장
+            console.log(`✅ 좌석 ${seatId} 예약 성공! 배석 확정 진행 중...`);
+            document.getElementById("favoritesContainer").innerHTML = `✅ 좌석 ${seatId} 예약 성공! 배석 확정 중...`;
+
+            // ✅ 예약 성공 후 배석 확정 실행
+            await confirmSeat(reservationId);
         } else {
             document.getElementById("favoritesContainer").innerHTML = `❌ 예약 실패: ${reserveData.message}`;
         }
@@ -65,6 +70,32 @@ async function reserveFavoriteSeat(seatId) {
         document.getElementById("favoritesContainer").innerHTML = "❌ 예약 오류 발생!";
     }
 }
+
+// ✅ 배석 확정 기능 추가
+async function confirmSeat(reservationId) {
+    try {
+        let response = await fetch(`https://library.konkuk.ac.kr/pyxis-api/1/api/seat-charges/${reservationId}?smufMethodCode=MOBILE&_method=put`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "pyxis-auth-token": localStorage.getItem("USER_TOKEN")
+            }
+        });
+
+        let data = await response.json();
+
+        if (data.success) {
+            console.log(`✅ 좌석 ${reservationId} 배석 확정 완료!`);
+            document.getElementById("favoritesContainer").innerHTML = `✅ 좌석 ${reservationId} 배석 확정 완료!`;
+        } else {
+            console.log(`❌ 배석 확정 실패: ${data.message}`);
+            document.getElementById("favoritesContainer").innerHTML = `❌ 배석 확정 실패: ${data.message}`;
+        }
+    } catch (error) {
+        document.getElementById("favoritesContainer").innerHTML = "❌ 배석 확정 오류 발생!";
+    }
+}
+
 
 // ✅ 페이지가 로드될 때 즐겨찾기 좌석을 표시
 document.addEventListener("DOMContentLoaded", function () {
