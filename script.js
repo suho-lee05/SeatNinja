@@ -15,7 +15,7 @@ async function login() {
         return;
     }
 
-    document.getElementById("status").innerText = "🔄 로그인 중...";
+    //document.getElementById("status").innerText = "🔄 로그인 중...";
 
     try {
         let response = await fetch("https://library.konkuk.ac.kr/pyxis-api/api/login", {
