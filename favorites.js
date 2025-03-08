@@ -54,7 +54,7 @@ async function reserveFavoriteSeat(seatId) {
             let reservationId = reserveData.data.id;  // ✅ 예약 ID 저장
             console.log(`✅ 좌석 ${seatId} 예약 성공! 배석 확정 진행 중...`);
 
-            alert(`✅ 좌석 ${seatId} 예약 성공! 배석 확정 진행 중...`); // ✅ 예약 성공 알림
+            //alert(`✅ 좌석 ${seatId} 예약 성공! 배석 확정 진행 중...`); // ✅ 예약 성공 알림
 
             // ✅ 예약 성공 후 배석 확정 실행
             await confirmSeat(reservationId);
