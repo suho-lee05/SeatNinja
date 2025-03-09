@@ -375,7 +375,7 @@ async function fetchSeatStatus() {
             let seats = data.data.list;
 
             // ✅ 칸막이석 필터링 (24~114번 좌석)
-            let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 114);
+            let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 131);
             let availableCubicleSeats = cubicleSeats.filter(s => !s.isOccupied).map(s => s.code);
             allCubicleSeats.push(...availableCubicleSeats);
 
