@@ -103,6 +103,16 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
+        /* QR 코드 스타일 */
+        .qr-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +135,12 @@
                 <button class="btn btn-danger" onclick="cancelReservation()">배석 해제</button>
                 <p id="cancelStatus"></p>
             </div>
+        </div>
+
+        <div class="qr-card">
+            <!-- <h2>📌 내 QR 코드</h2> -->
+            <!-- <p id="qrStatus">QR 코드 로딩 중...</p> -->
+            <div id="qrCode"></div>
         </div>
 
         <div class="card">
