@@ -38,7 +38,6 @@
         .btn {
             width: 100%;
             padding: 12px;
-            margin: 8px 0;
             border: none;
             border-radius: 5px;
             font-size: 16px;
@@ -90,6 +89,20 @@
             text-align: center;
         }
 
+        /* 좌석 연장 & 배석 해제 반반 레이아웃 */
+        .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .row .half-card {
+            width: 48%;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -101,16 +114,17 @@
             <p><strong>연장 가능 시간:</strong> <span id="renewTime">조회 중...</span></p>
         </div>
 
-        <div class="card">
-            <h2>🔄 좌석 연장</h2>
-            <button class="btn btn-primary" onclick="renewSeat()">연장하기</button>
-            <p id="renewStatus"></p>
-        </div>
-
-        <div class="card">
-            <h2>❌ 배석 해제</h2>
-            <button class="btn btn-danger" onclick="cancelReservation()">배석 해제</button>
-            <p id="cancelStatus"></p>
+        <div class="row">
+            <div class="half-card">
+                <h2>🔄 좌석 연장</h2>
+                <button class="btn btn-primary" onclick="renewSeat()">연장하기</button>
+                <p id="renewStatus"></p>
+            </div>
+            <div class="half-card">
+                <h2>❌ 배석 해제</h2>
+                <button class="btn btn-danger" onclick="cancelReservation()">배석 해제</button>
+                <p id="cancelStatus"></p>
+            </div>
         </div>
 
         <div class="card">
