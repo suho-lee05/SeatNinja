@@ -478,8 +478,8 @@ function generateQRCode(data) {
     document.getElementById("qrCode").innerHTML = "";
     new QRCode(document.getElementById("qrCode"), {
         text: data,
-        width: 128,
-        height: 128
+        width: 180,
+        height: 180
     });
 }
 
