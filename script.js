@@ -347,9 +347,9 @@ async function renewSeat() {
 }
 
 
-// ✅ 열람실 칸막이석 & 1인석 상태 조회
+// ✅ 여러 개의 RoomID를 조회
 async function fetchSeatStatus() {
-    USER_TOKEN = localStorage.getItem("USER_TOKEN");
+    let USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
     if (!USER_TOKEN) {
         document.getElementById("cubicleSeatsStatus").innerText = "❌ 로그인 정보 없음.";
@@ -357,36 +357,44 @@ async function fetchSeatStatus() {
         return;
     }
 
+    let ROOM_IDS = [102, 101]; // ✅ 여러 개의 RoomID를 조회할 배열
+    let allCubicleSeats = [];
+    let allSingleSeats = [];
+
     try {
-        let response = await fetch(`https://library.konkuk.ac.kr/pyxis-api/1/api/rooms/${ROOM_ID}/seats`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                "pyxis-auth-token": USER_TOKEN
-            }
-        });
+        for (let ROOM_ID of ROOM_IDS) {
+            let response = await fetch(`https://library.konkuk.ac.kr/pyxis-api/1/api/rooms/${ROOM_ID}/seats`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "pyxis-auth-token": USER_TOKEN
+                }
+            });
 
-        let data = await response.json();
-        let seats = data.data.list;
+            let data = await response.json();
+            let seats = data.data.list;
 
-        // ✅ 칸막이석 필터링 (24~129번 좌석)
-        let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 114);
-        let availableCubicleSeats = cubicleSeats.filter(s => !s.isOccupied).map(s => s.code);
+            // ✅ 칸막이석 필터링 (24~114번 좌석)
+            let cubicleSeats = seats.filter(s => s.code >= 24 && s.code <= 114);
+            let availableCubicleSeats = cubicleSeats.filter(s => !s.isOccupied).map(s => s.code);
+            allCubicleSeats.push(...availableCubicleSeats);
 
-        // ✅ 1인석 필터링 (지정된 번호 범위)
-        let singleSeatNumbers = [1, 2, 3, 4, 21, 22, 23, 391, 392, 393, 394, 395, 396, 397, 398, 405, 406, 407, 408];
-        let singleSeats = seats.filter(s => singleSeatNumbers.includes(s.code));
-        let availableSingleSeats = singleSeats.filter(s => !s.isOccupied).map(s => s.code);
+            // ✅ 1인석 필터링 (지정된 번호 범위)
+            let singleSeatNumbers = [1, 2, 3, 4, 21, 22, 23, 391, 392, 393, 394, 395, 396, 397, 398, 405, 406, 407, 408];
+            let singleSeats = seats.filter(s => singleSeatNumbers.includes(s.code));
+            let availableSingleSeats = singleSeats.filter(s => !s.isOccupied).map(s => s.code);
+            allSingleSeats.push(...availableSingleSeats);
+        }
 
         // ✅ HTML 업데이트
-        document.getElementById("cubicleSeatsStatus").innerHTML = 
-            availableCubicleSeats.length > 0 
-                ? `✅ ${availableCubicleSeats.join(", ")} 번 사용 가능` 
+        document.getElementById("cubicleSeatsStatus").innerHTML =
+            allCubicleSeats.length > 0
+                ? `✅ ${allCubicleSeats.join(", ")} 번 사용 가능`
                 : "❌ 모두 사용 중";
 
-        document.getElementById("singleSeatsStatus").innerHTML = 
-            availableSingleSeats.length > 0 
-                ? `✅ ${availableSingleSeats.join(", ")} 번 사용 가능` 
+        document.getElementById("singleSeatsStatus").innerHTML =
+            allSingleSeats.length > 0
+                ? `✅ ${allSingleSeats.join(", ")} 번 사용 가능`
                 : "❌ 모두 사용 중";
 
     } catch (error) {
@@ -399,7 +407,6 @@ async function fetchSeatStatus() {
 document.addEventListener("DOMContentLoaded", function () {
     fetchSeatStatus();
 });
-
 
 // ✅ 즐겨찾기 페이지로 이동
 function goToFavorites() {
