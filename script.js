@@ -48,7 +48,7 @@ async function login() {
     }
 }
 
-// ✅ 로그아웃 기능 (localStorage 삭제 후 로그인 페이지로 이동)
+
 function logout() {
     localStorage.removeItem("USER_ID");
     localStorage.removeItem("USER_PW");
@@ -56,17 +56,17 @@ function logout() {
 }
 
 
-// ✅ 내 정보 페이지로 이동
+
 function goToMyInfo() {
     window.location.href = "myinfo.html";
 }
 
-// ✅ 뒤로 가기 (myinfo.html에서 index.html로 이동)
+// 
 function goBack() {
     window.location.href = "main.html";
 }
 
-// ✅ 내 정보 조회 (배석 취소용 ID 저장)
+// 
 async function getUserInfo() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -124,11 +124,11 @@ async function getUserInfo() {
         document.getElementById("remainingTime").innerText = "-";
         document.getElementById("renewTime").innerText = "-";
     }
-    // ✅ QR 코드 로드 실행
+    // 
     fetchQRCode();
 }
 
-// ✅ 페이지 로드시 내 정보 자동 조회
+// 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.includes("myinfo.html")) {
         getUserInfo();
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// ✅ 1. Seat Ninja 시작 (좌석 예약)
+// 
 async function startSeatNinja(mode) {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -164,7 +164,7 @@ async function startSeatNinja(mode) {
     }
 }
 
-// ✅ 2. 특정 좌석 예약
+// 
 async function reserveSpecificSeat(seatId) {
     try {
         let response = await fetch("https://library.konkuk.ac.kr/pyxis-api/1/api/seat-charges", {
@@ -265,7 +265,7 @@ async function confirmSeat(reservationId) {
 }
 
 
-// ✅ 배석 취소 (반납) 기능
+// 
 async function cancelReservation() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -306,7 +306,7 @@ async function cancelReservation() {
 }
 
 
-// ✅ 좌석 연장 기능 (새로운 API 적용)
+// 
 async function renewSeat() {
     USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -347,7 +347,7 @@ async function renewSeat() {
 }
 
 
-// ✅ 여러 개의 RoomID를 조회
+// 
 async function fetchSeatStatus() {
     let USER_TOKEN = localStorage.getItem("USER_TOKEN");
 
@@ -403,12 +403,12 @@ async function fetchSeatStatus() {
     }
 }
 
-// ✅ 페이지 로드시 자동으로 좌석 정보 조회
+// 
 document.addEventListener("DOMContentLoaded", function () {
     fetchSeatStatus();
 });
 
-// ✅ 즐겨찾기 페이지로 이동
+// 
 function goToFavorites() {
     window.location.href = "favorites.html";
 }
@@ -427,7 +427,7 @@ function stopLoop() {
     document.getElementById("status").innerText = "🛑 예약 중지됨.";
 }
 
-// ✅ 6. 페이지 로드시 로그인 정보 확인
+// 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.includes("index.html")) {
         USER_TOKEN = localStorage.getItem("USER_TOKEN");
@@ -441,12 +441,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// ✅ QR 코드 생성 라이브러리 로드
+// 
 const script = document.createElement('script');
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
 document.head.appendChild(script);
 
-// ✅ QR 코드 가져오기 및 표시
+// 
 async function fetchQRCode() {
     if (!USER_TOKEN) {
         document.getElementById("qrStatus").innerText = "❌ 로그인 필요";
@@ -480,7 +480,7 @@ async function fetchQRCode() {
     }
 }
 
-// ✅ QR 코드 생성 함수
+// 
 function generateQRCode(data) {
     document.getElementById("qrCode").innerHTML = "";
     new QRCode(document.getElementById("qrCode"), {
@@ -490,7 +490,7 @@ function generateQRCode(data) {
     });
 }
 
-// ✅ 페이지 로드시 자동으로 QR 코드 불러오기
+// 
 document.addEventListener("DOMContentLoaded", function () {
     if (window.location.pathname.includes("myinfo.html")) {
         fetchQRCode();
